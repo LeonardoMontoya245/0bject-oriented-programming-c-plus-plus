@@ -1,5 +1,6 @@
-#include "RPG.H"
+
 #include "RPG.h"
+#include <iostream> 
 
 RPG::RPG() 
 {
@@ -124,4 +125,63 @@ bool RPG::isAlive() const {
     }
     // return health>0;
     
+} 
+
+/**
+ * @brief attack decrease the opponet's health by (strenght - opponet's defense)
+ * In other words, the opponet's defense should soften the blow from the attack 
+ * 
+ * For example, if opponent's health is 100, opponent defense is 5, and players's 
+ * strenght is 20, then after the attack, opponent's health should be 
+ * 85 (i.e. 100 - (20 - 5)). 
+ * 
+ * First calculate the oppoent's health then use (*opponent).getUpdate(new_health)
+ *  to update their health. 
+ * 
+ * @param opponent 
+ */
+void RPG::attack(RPG * opponent){
+
+    int opp_health = ( *opponent).getHealth(); 
+
+    int opp_def = (*opponent).getDefense(); 
+    
+    int new_health = opp_health - strength; 
+    
+    if (strength - opp_def > 0) {
+           
+    } else { 
+        
+        new_health = opp_health; 
+          
+    }
+    
+    (*opponent).updateHealth(new_health); 
 }
+/**
+ * @brief prompts the user to choose a skill and calls printAction() and attack()
+ * 
+ * @param opponent 
+ */
+void RPG::useSkill(RPG * opponent){
+
+    for(int i = 0; i < SKILL_SIZE; i++){
+        printf("Skill %i: %s\n", i, skills[1].c_str()); 
+    } 
+    
+    int chosen_skill_index; 
+    
+    printf("Choose a skill to use: Enter 0 or 1\n"); 
+
+    cin >> chosen_skill_index; 
+
+    string chosen_skill = skills[chosen_skill_index]; 
+
+    printAction(chosen_skill, (* opponent)); 
+
+    attack(opponent); 
+}
+
+
+
+

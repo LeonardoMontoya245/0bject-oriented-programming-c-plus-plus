@@ -19,7 +19,7 @@ class RPG{
         void getDefense(int defense); 
         void setSkills(); 
         void printAction(string skill, RPG opponent); 
-        
+         
         
 
         string getName() const;  
@@ -28,6 +28,8 @@ class RPG{
         int getDefense() const; 
         void updateHealth(int); 
         bool isAlive() const; 
+        void attack(RPG * opponent); 
+        void useSkill(RPG * opponent); 
         
 
 
