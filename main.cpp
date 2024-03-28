@@ -1,90 +1,124 @@
-
 #include <iostream> 
-#include "RPG.h"
-
+#include <fstream> 
 using namespace std; 
 
 /**
- * @brief prints both player's name and their health. 
- * Example Output for name Wiz and NPC
- * Wiz health: 75 NPC health: 100\n  
+ * @brief  writes sample_size number of integers 
+ * example output : if n = 3 and arr = [1,2,3]
+ * 1
+ * 2
+ * 3
  * 
- * @param player1 
- * @param player2 
+ * @param filename 
+ * @param arr 
+ * @param sample_size 
+ * 
+ */ 
+void writeToFile(string filename, int * arr, int sample_size ){
+
+    ofstream file (filename); 
+     
+
+    for(int i = 0; i < sample_size; i++ ){
+        file << arr[i]; 
+        file << "\n"; 
+    }
+    file.close(); 
+    printf("Wrote to %s\n", filename.c_str()); 
+} 
+/**
+ * @brief  writes sample_size number of strings 
+ * example output : if n = 2 and arr = ["cat", "dog"]
+ * cat 
+ * dog 
+ * @param filename 
+ * @param arr 
+ * @param sample_size 
+ * 
  */
-void displayStats(RPG player1, RPG player2){ 
+void writeToFile(string filename, string * arr, int sample_size){
 
+    ofstream file(filename); 
+     
 
-    printf("%s Health: %i ", player1.getName().c_str(), player1.getHealth()); 
+    for(int i = 0; i < sample_size; i++){
 
-    printf("%s Health: %i ", player2.getName().c_str(), player2.getHealth()); 
+        file << arr[i]; 
+        file << "\n"; 
+
+    }
+    file.close(); 
+    printf("Wrote to %s\n", filename.c_str()); 
+    
+} 
+/**
+ * @brief writes sample_size number of char 
+ * example output: if n = 2 and arr = ["c","d"]
+ * c 
+ * d 
+ * @param filename 
+ * @param arr 
+ * @param sample_size 
+ */
+void writeToFile(string filename, char * arr, int sample_size){
+
+    ofstream file(filename); 
+    
+
+    for(int i = 0; i < sample_size; i++){
+
+        file << arr[i]; 
+        file << "\n"; 
+    }
+    file.close(); 
+    printf("Wrote to %s\n", filename.c_str()); 
+} 
+/**
+ * @brief read the content of any file 
+ * 
+ * @param filename 
+ */
+void readFile(string filename){
+
+    ifstream file(filename); 
+    string line; 
+
+    while(!file.eof()){
+        file >> line; 
+        printf("%s\n", line.c_str()); 
+
+    }
+    cout << "end of the loop" << endl; 
 } 
 
-/**
- * @brief Display who wins based on who is alive. use an if statement to check wether
- * Player 1 is alive. if so, print that they win else player 2 won. 
- *  
- * Example Output: 
- * Wiz defeated NPC! Good game!\n 
- * 
- * @param player1
- * @param player2 
- */
-void displayEnd(RPG player1, RPG player2){ 
+int main () {
+    const int SAMPLE_SIZE = 10; 
+    int array_int[SAMPLE_SIZE] = {1,2,3,4,5,6,7,8,9,10}; 
+    string array_str[SAMPLE_SIZE] = {"this", "is", "sentence.", "this", "is", "another", "sentence", "the", "end"};
+    char array_char[SAMPLE_SIZE] = {'a', 'b', 'c', 'd', 'e', '0', '1', '2', '3', '4'}; 
 
-    if (player1.isAlive()){
-        printf("%s defeated %s", player1.getName().c_str(), player2.getName().c_str()); 
-    } else {
-        printf("%s defeate %s", player2.getName().c_str(), player1.getName().c_str());   
-     }
-}
-/**
- * @brief uses a while loop to check whether both player are alive 
- * if so, it calls displayStats((*player1), (*player2)) 
- * Inside the while loop it: 
- * then call (*player1).useSkill(player2)
- * then print "---------------\n"
- * 
- * repeat the process for player 2 acting on player 1 inside the same while loop
- * then prints the name of player to to say that it their turn 
- * then call (*player2).useSkill(player1)
- * then print "---------------\n"
- * 
- * Refer to the role playing game part two instructions for the 
- * example output 
- * 
- * @param player1 
- * @param player2 
- */
-void gameLoop(RPG * player1, RPG * player2){
+    string int_file = "array_int.csv"; 
+    writeToFile(int_file, array_int, SAMPLE_SIZE); 
 
-    while (player1->isAlive() && player2->isAlive()){
-         
-        displayStats((*player1), (*player2)); 
+    string char_file = "array_char.csv"; 
+    writeToFile(char_file, array_char, SAMPLE_SIZE); 
 
-        (*player1).useSkill(player2); 
+    string string_file = "array_string.csv";
+    writeToFile(string_file, array_str, SAMPLE_SIZE); 
 
-        printf("---------------\n");  
+    //string str = "array_str.csv"; 
 
-        displayStats((*player1), (*player2)); 
-        
-        (*player2).useSkill(player1); 
+    //writeToFile(str, array_str, SAMPLE_SIZE); 
 
-         printf("---------------\n"); 
+    //string character = "array_char.csv"; 
 
-    }   
+    //writeToFile(character, array_char, SAMPLE_SIZE); 
 
-
-}
-
-int main() {
-
-    RPG p1 = RPG("Wiz", 70, 45, 15, "mage"); 
-    RPG p2 = RPG(); 
-
-    gameLoop(&p1, &p2); 
-    displayEnd(p1, p2);
+    readFile(int_file); 
+    readFile(char_file); 
+    readFile(string_file); 
 
     return 0; 
-}
 
+
+}
